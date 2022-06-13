@@ -1,1 +1,7 @@
-GET http://localhost:8000/POST
+GET http://localhost:8000/objeto
+
+###
+GET http://localhost:8000/objeto/2
+
+###
+DELETE http://localhost:8000/objeto/1

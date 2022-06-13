@@ -12,10 +12,10 @@ const app = express();
 app.use(cors());
 app.use(express.json()); //Procesar el body. Le estoy diciendo que el body que va a recibir esta en json y si está en json la interpreta
 
-app.use(middleware.consoleData);
+app.use(middleware.consoleData); 
 
 app.use("/keepalive", keepaliveController);
-app.use("/entry", entryController);
+app.use("/objeto", entryController);
 //app.use("/login", loginController);
 //app.use("/post", postController);
 
