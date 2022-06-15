@@ -1,0 +1,16 @@
+PUT http://localhost:8000/scat/4
+Content-Type: application/json
+
+{
+    "id": 4,
+    "desc": "Head"
+}
+
+###
+PUT http://localhost:8000/scat/4
+Content-Type: application/json
+
+{
+    "id": 4,
+    "desc": "Cabeza"
+}

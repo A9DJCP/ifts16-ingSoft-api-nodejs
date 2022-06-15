@@ -1,0 +1,15 @@
+PUT http://localhost:8000/marca/4
+Content-Type: application/json
+
+{
+    "id":4,    
+    "desc":"Universal Clothes",
+}
+###
+PUT http://localhost:8000/marca/4
+Content-Type: application/json
+
+{
+    "id":4,    
+    "desc":"Universal",
+}

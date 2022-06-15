@@ -1,0 +1,15 @@
+PUT http://localhost:8000/cat/4
+Content-Type: application/json
+
+{
+    "id":4,    
+    "desc":"Indefinido",
+}
+###
+PUT http://localhost:8000/cat/4
+Content-Type: application/json
+
+{
+    "id":4,    
+    "desc":"Undefined",
+}

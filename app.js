@@ -1,8 +1,15 @@
 const express = require("express");
 const cors = require("cors");
-const middleware = require("./utils/mw");
-const keepaliveController = require("./controller/keepalive");
+const middleware = require("./utils/middleware");
+
+//CONTROLLERS
 const entryController = require("./controller/entry");
+const loginController = require("./controller/login");
+const catController = require("./controller/inCat");
+const marcaController = require("./controller/inMarca");
+const prodController = require("./controller/inProd");
+const subCatController = require("./controller/inSubCat");
+const userController = require("./controller/inUser");
 
 const app = express();
 
@@ -12,12 +19,19 @@ const app = express();
 app.use(cors());
 app.use(express.json()); //Procesar el body. Le estoy diciendo que el body que va a recibir esta en json y si está en json la interpreta
 
-app.use(middleware.consoleData); 
+app.use(middleware.consoleData);
+app.use(middleware.processToken);
 
-app.use("/keepalive", keepaliveController);
+//COMPONENTES de Endpoints y sus Controladores
 app.use("/objeto", entryController);
-//app.use("/login", loginController);
-//app.use("/post", postController);
+app.use("/cat", catController);
+app.use("/marca", marcaController);
+app.use("/prod", prodController);
+app.use("/sCat", subCatController);
+app.use("/user", userController);
+
+//LOGIN
+app.use("/login", loginController);
 
 app.use(middleware.unkEP);
 module.exports = app;

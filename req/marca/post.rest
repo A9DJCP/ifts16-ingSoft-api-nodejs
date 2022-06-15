@@ -1,0 +1,7 @@
+POST http://127.0.0.1:8000/marca
+Content-Type: application/json
+//FORMATO marca(id, nombre)
+{
+    "id": 4,
+    "desc": "Universal"
+}

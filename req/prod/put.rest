@@ -1,0 +1,26 @@
+PUT http://localhost:8000/prod/4
+Content-Type: application/json
+
+{
+    "id": 4,
+    "desc": "Sombrero Clasico Blanco",
+    "price":70,
+    "stock":5000,
+    "marca":"Universal",
+    "cat":"Undefined",
+    "sCat":"Cabeza"
+}
+
+###
+PUT http://localhost:8000/prod/4
+Content-Type: application/json
+
+{
+    "id": 4,
+    "desc": "Sombrero Clasico Negro",
+    "price":80,
+    "stock":5000,
+    "marca":"Universal",
+    "cat":"Undefined",
+    "sCat":"Cabeza"
+}

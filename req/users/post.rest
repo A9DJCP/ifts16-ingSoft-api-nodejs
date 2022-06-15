@@ -1,0 +1,10 @@
+POST http://127.0.0.1:8000/user
+//FORMATO user(id, nick, nom, ape, email)
+Content-Type: application/json
+{
+    "id": 4,
+    "nick": "gblack223",
+    "nom":"Geremias",
+    "ape":"Johnson",
+    "email":"gjohnson@gmail.com"
+    }

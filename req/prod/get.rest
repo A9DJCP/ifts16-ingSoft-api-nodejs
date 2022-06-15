@@ -1,0 +1,15 @@
+
+//PRODUCTOS
+
+###
+GET http://localhost:8000/prod
+
+###
+GET http://localhost:8000/prod/1
+
+###
+GET http://localhost:8000/prod?cat=male
+###
+GET http://localhost:8000/prod?cat=male&scat=torso
+###
+GET http://localhost:8000/prod?scat=calzado

@@ -1,0 +1,7 @@
+//SUBCATEGORIAS
+
+###
+GET http://localhost:8000/scat
+
+###
+GET http://localhost:8000/scat/1
