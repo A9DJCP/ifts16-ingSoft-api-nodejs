@@ -1,14 +1,20 @@
-//Esta clase va a simular ser la BD
+//FORMATO categoria(id, desc)
 let entry = [
 	{
 		id: 1,
-		title: "primer post",
-		content: "mucho bla bla bla",
+		desc: "Male",
 	},
 	{
 		id: 2,
-		title: "primer post",
-		content: "mucho bla bla bla",
+		desc: "Female",
+	},
+	{
+		id: 3,
+		desc: "Mixt",
+	},
+	{
+		id: 4,
+		desc: "Undefined",
 	},
 ];
 
@@ -25,10 +31,9 @@ const save = (body) => {
 };
 
 const borrar = (id) => {
-	//Filtro la entrada y mantengo todos los que tengan un id distinto al que tengo
 	const index = entry.findIndex((registro) => registro.id == id);
 	if (index > 0) {
-		entry.splice(index, 1); //Borro un elemento a partir del index del array.
+		entry.splice(index, 1);
 		return true;
 	}
 	return false;

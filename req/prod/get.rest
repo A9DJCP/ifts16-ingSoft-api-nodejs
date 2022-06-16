@@ -5,11 +5,21 @@
 GET http://localhost:8000/prod
 
 ###
-GET http://localhost:8000/prod/1
+GET http://localhost:8000/prod/2
+
+### Filtros Multiples --> Todavia no funciona
+GET http://localhost:8000/prod?cat=male&sCat=all&marca=all
+
+
+#Filtros Simples
+###
+GET http://localhost:8000/prod/cat/male
 
 ###
-GET http://localhost:8000/prod?cat=male
+GET http://localhost:8000/prod/sCat/calzado
+
 ###
-GET http://localhost:8000/prod?cat=male&scat=torso
+GET http://localhost:8000/prod/marca/rebook
+
 ###
-GET http://localhost:8000/prod?scat=calzado
+GET http://localhost:8000/prod/filtroMal/algo

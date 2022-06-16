@@ -6,8 +6,4 @@ GET http://localhost:8000/user/1
 
 
 ###
-GET http://localhost:8000/user?perm=admin
-###
-GET http://localhost:8000/prod?perm=observador&acc=invitado
-###
-GET http://localhost:8000/prod?acc=register
+GET http://localhost:8000/user/permisos/admin
