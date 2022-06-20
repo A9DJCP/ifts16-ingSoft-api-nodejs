@@ -24,7 +24,7 @@ router.get("/:id", middleware.validarUserLogin, (req, res) => {
 });
 
 /*Obtener con Filtro Simple*/
-router.get("/:filtro/:val", (req, res) => {
+router.get("/:filtro/:val", middleware.validarUserLogin, (req, res) => {
 	const filtro = req.params.filtro;
 	res.status(200).json(dao.getByFiltro(req.params.val));
 });

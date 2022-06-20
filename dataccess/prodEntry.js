@@ -29,6 +29,33 @@ let entry = [
 		cat: "Female",
 		sCat: "Pantalon",
 	},
+	{
+		id: 4,
+		desc: "Zapatos Negros Clásicos",
+		price: "75",
+		stock: "3500",
+		marca: "Adidas",
+		cat: "Male",
+		sCat: "Calzado",
+	},
+	{
+		id: 5,
+		desc: "Tacones Altos Rojos Brillantes",
+		price: "80",
+		stock: "2950",
+		marca: "Nike",
+		cat: "Female",
+		sCat: "Calzado",
+	},
+	{
+		id: 6,
+		desc: "Remera Común Tipo B Azul",
+		price: "100",
+		stock: "2000",
+		marca: "Rebook",
+		cat: "Mixto",
+		sCat: "Torso",
+	},
 ];
 
 const getAll = () => {
@@ -79,4 +106,16 @@ const getByFiltro = (catF, sCatF, marcaF) => {
 	return entryFiltered;
 };
 
-module.exports = { getAll, getOne, save, borrar, update, getByFiltro };
+const getMaxId = () => {
+	return entry.length;
+};
+
+module.exports = {
+	getAll,
+	getOne,
+	save,
+	borrar,
+	update,
+	getByFiltro,
+	getMaxId,
+};

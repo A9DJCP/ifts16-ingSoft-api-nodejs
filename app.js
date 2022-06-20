@@ -3,7 +3,6 @@ const cors = require("cors");
 const middleware = require("./utils/middleware");
 
 //CONTROLLERS
-const entryController = require("./controller/entry");
 const loginController = require("./controller/login");
 const catController = require("./controller/inCat");
 const marcaController = require("./controller/inMarca");
@@ -23,7 +22,6 @@ app.use(middleware.consoleData);
 app.use(middleware.processToken);
 
 //COMPONENTES de Endpoints y sus Controladores
-app.use("/objeto", entryController);
 app.use("/cat", catController);
 app.use("/marca", marcaController);
 app.use("/prod", prodController);

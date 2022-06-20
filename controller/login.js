@@ -5,26 +5,31 @@ const usuarios = require("../dataccess/userEntry");
 
 router.post("/", (req, res) => {
 	const { body } = req;
-	const body2 = usuarios.buscarUsuario(body.nickname);
-	if (body2[0]) {
-		if (body2[1] == "admin") {
-			const tokenData = {
-				username: body.username,
-				id: body2[2],
-				profile: "admin",
+	const index = usuarios.buscarUsuario(body.nickname) + 1;
+	if (index >= 1) {
+		let tokenData;
+		const body2 = usuarios.getOne(index);
+		if (body2.permisos == "admin") {
+			tokenData = {
+				nickname: body.nickname,
+				id: body2.id,
+				permisos: "admin",
 			};
+			console.log("tokenData: ", tokenData);
 		} else {
-			const tokenData = {
-				username: body.username,
-				id: body2[2],
-				profile: "client",
+			tokenData = {
+				nickname: body.nickname,
+				id: body2.id,
+				permisos: "client",
 			};
 		}
 		//El token recibe la data y una palabra secreta unica
 		const token = jwt.sign(tokenData, process.env.JWTSECRET, {
 			expiresIn: "1h",
 		});
-		res.status(200).send({ token, name: body.username });
+		res
+			.status(200)
+			.send({ token, nickname: body.nickname, permisos: tokenData.permisos });
 	} else {
 		//usuario incorrecto
 		return res.status(401).json({ error: "credenciales incorrectas" });

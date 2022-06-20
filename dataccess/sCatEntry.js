@@ -44,4 +44,8 @@ const update = (id) => {
 	return false;
 };
 
-module.exports = { getAll, getOne, save, borrar, update };
+const getMaxId = () => {
+	return entry.length;
+};
+
+module.exports = { getAll, getOne, save, borrar, update, getMaxId };

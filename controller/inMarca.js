@@ -12,6 +12,17 @@ router.get("/", (req, res) => {
 	res.status(200).json(dao.getAll());
 });
 
+/*Obtener una específica*/
+router.get("/:id", (req, res) => {
+	const id = req.params.id;
+	const data = dao.getOne(id);
+	if (data) {
+		res.status(200).json(data);
+	} else {
+		res.sendStatus(404);
+	}
+});
+
 /*Un usuario logeado como ADMIN puede postear marcas, modificarlas y borrarlas (borrar marcas no eliminará sus productos asociados, 
     sólo no aparecerán en el listado de marcas de la página)*/
 

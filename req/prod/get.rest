@@ -5,7 +5,7 @@
 GET http://localhost:8000/prod
 
 ###
-GET http://localhost:8000/prod/2
+GET http://localhost:8000/prod/4
 
 ### Filtros Multiples --> Todavia no funciona
 GET http://localhost:8000/prod?cat=male&sCat=all&marca=all

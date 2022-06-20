@@ -12,6 +12,17 @@ router.get("/", (req, res) => {
 	res.status(200).json(dao.getAll());
 });
 
+/* Obtener uno especifico */
+router.get("/:id", (req, res) => {
+	const id = req.params.id;
+	const data = dao.getOne(id);
+	if (data) {
+		res.status(200).json(data);
+	} else {
+		res.sendStatus(404);
+	}
+});
+
 /*Un usuario logeado como ADMIN puede postear categorias, modificarlos y borrarlos*/
 
 //USUARIO SIN LOGEAR

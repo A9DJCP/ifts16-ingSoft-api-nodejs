@@ -2,7 +2,7 @@
 let entry = [
 	{
 		id: 1,
-		nickname: "ema123",
+		nickname: "admin",
 		psw: "12345",
 		name: "Emanuel",
 		sname: "Ramirez",
@@ -62,9 +62,9 @@ const update = (id) => {
 const buscarUsuario = (nick) => {
 	const index = entry.findIndex((registro) => registro.nickname == nick);
 	if (index >= 0) {
-		return true, entry[index].permisos, index;
+		return index;
 	} else {
-		return false;
+		return -1;
 	}
 };
 
@@ -80,4 +80,17 @@ const getByFiltro = (permisosF) => {
 	return entryFiltered;
 };
 
-module.exports = { getAll, getOne, save, borrar, update, getByFiltro };
+const getMaxId = () => {
+	return entry.length;
+};
+
+module.exports = {
+	getAll,
+	getOne,
+	save,
+	borrar,
+	update,
+	getByFiltro,
+	buscarUsuario,
+	getMaxId,
+};

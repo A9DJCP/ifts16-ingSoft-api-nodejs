@@ -4,4 +4,4 @@
 GET http://localhost:8000/marca
 
 ###
-GET http://localhost:8000/marca/1
+GET http://localhost:8000/marca/2
