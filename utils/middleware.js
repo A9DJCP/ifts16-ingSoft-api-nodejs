@@ -8,7 +8,7 @@ const consoleData = (req, res, next) => {
 	console.log("Method:" + req.method);
 	console.log("Path:" + req.path);
 	console.log("Body:", req.body);
-	
+
 	console.log("-------");
 	next();
 };
@@ -36,20 +36,25 @@ const validarUserLogin = (req, res, next) => {
 	if (!decodeToken.id) {
 		return res.status(401).json({ error: "token invalid" });
 	}
+	if (jwt.TokenExpiredError) {
+		return res.status(401).json({ error: "Token Expired" });
+	}
 	req.user = decodeToken;
 	next();
 };
 
-const validarPermisos = (req, resp, next) => {
-	if (!req.token) {
-		return resp.status(401).json({ error: "token missing" });
-	}
+const validarAdmin = (req, res, next) => {
 	const decodeToken = jwt.verify(req.token, process.env.JWTSECRET);
+	const permisos = decodeToken.permisos;
 
-	if (!decodeToken.id) {
-		return resp.status(401).json({ error: "token invalid" });
+	if (permisos == "admin") {
+		req.user = decodeToken;
+	} else {
+		return res.status(401).json({ error: "No admin token" });
 	}
-	req.user = decodeToken;
+	if (jwt.TokenExpiredError) {
+		return res.status(401).json({ error: "Token Expired" });
+	}
 	next();
 };
 
@@ -58,4 +63,5 @@ module.exports = {
 	unkEP,
 	processToken,
 	validarUserLogin,
+	validarAdmin,
 };

@@ -2,13 +2,14 @@ const jwt = require("jsonwebtoken");
 const router = require("express").Router();
 require("dotenv").config();
 const usuarios = require("../dataccess/userEntry");
+const functions = require("../dataccess/functions");
 
 router.post("/", (req, res) => {
 	const { body } = req;
 	const index = usuarios.buscarUsuario(body.nickname) + 1;
 	if (index >= 1) {
 		let tokenData;
-		const body2 = usuarios.getOne(index);
+		const body2 = functions.getOne(index, usuarios.entry);
 		if (body2.permisos == "admin") {
 			tokenData = {
 				nickname: body.nickname,
