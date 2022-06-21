@@ -2,15 +2,17 @@ const router = require("express").Router();
 let dao = require("../dataccess/userEntry");
 const { v4: uuidv4 } = require("uuid");
 const middleware = require("../utils/middleware");
+const functions = require("../dataccess/functions");
 
 /*--------------------USUARIOS--------------------*/
 
 /*Un usuario sin logear no puede hacer nada con respecto a los usuarios.*/
 /*Un usuario logeado como ADMIN puede postear Usuarios, modificar usuarios y ver todos los usuarios*/
 
-//USUARIO LOGEADO
+//USUARIO LOGEADO COMO ADMIN
+
 router.get("/", middleware.validarUserLogin, (req, res) => {
-	res.status(200).json(dao.getAll());
+	res.status(200).json(functions.getAll(dao.entry));
 });
 
 router.get("/:id", middleware.validarUserLogin, (req, res) => {
@@ -24,21 +26,19 @@ router.get("/:id", middleware.validarUserLogin, (req, res) => {
 });
 
 /*Obtener con Filtro Simple*/
-router.get("/:filtro/:val", middleware.validarUserLogin, (req, res) => {
-	const filtro = req.params.filtro;
+router.get("/permisos/:val", middleware.validarUserLogin, (req, res) => {
 	res.status(200).json(dao.getByFiltro(req.params.val));
 });
 
 router.post("/", middleware.validarUserLogin, (req, res) => {
-	const body = { ...req.body, id: uuidv4(), user: req.user };
-	dao.save(body);
+	const body = { id: functions.getMaxId(dao.entry) + 1, ...req.body };
+	functions.save(body, dao.entry);
 	res.status(200).json(body);
 });
 
 router.delete("/:id", middleware.validarUserLogin, (req, res) => {
 	const id = req.params.id;
-
-	if (dao.borrar(id)) {
+	if (functions.borrar(id, dao.entry)) {
 		res.sendStatus(202);
 	} else {
 		res.sendStatus(404);
@@ -46,15 +46,13 @@ router.delete("/:id", middleware.validarUserLogin, (req, res) => {
 });
 
 router.put("/:id", middleware.validarUserLogin, (req, res) => {
-	const id = req.params.id;
-
-	if (dao.update(id, req.body)) {
+	console.log(req.body);
+	const body = { ...req.body };
+	if (functions.update(body, dao.entry)) {
 		res.sendStatus(202);
 	} else {
 		res.sendStatus(404);
 	}
 });
-
-module.exports = router;
 
 module.exports = router;

@@ -2,6 +2,7 @@ const router = require("express").Router();
 let dao = require("../dataccess/marcaEntry");
 const { v4: uuidv4 } = require("uuid");
 const middleware = require("../utils/middleware");
+const functions = require("../dataccess/functions");
 
 /*--------------------MARCAS--------------------*/
 /*Un usuario invitado sin logear Puede Ver todas las marcas cuyos productos contiene nuestro sitio*/
@@ -9,13 +10,13 @@ const middleware = require("../utils/middleware");
 
 /* Obtener todo */
 router.get("/", (req, res) => {
-	res.status(200).json(dao.getAll());
+	res.status(200).json(functions.getAll(dao.entry));
 });
 
 /*Obtener una específica*/
 router.get("/:id", (req, res) => {
 	const id = req.params.id;
-	const data = dao.getOne(id);
+	const data = functions.getOne(id, dao.entry);
 	if (data) {
 		res.status(200).json(data);
 	} else {
@@ -26,16 +27,17 @@ router.get("/:id", (req, res) => {
 /*Un usuario logeado como ADMIN puede postear marcas, modificarlas y borrarlas (borrar marcas no eliminará sus productos asociados, 
     sólo no aparecerán en el listado de marcas de la página)*/
 
-//USUARIO LOGEADO
+//USUARIO LOGEADO COMO ADMIN
 router.post("/", middleware.validarUserLogin, (req, res) => {
-	const body = { ...req.body, id: uuidv4(), user: req.user };
-	dao.save(body);
+	//const body = { ...req.body, id: uuidv4(), user: req.user };
+	const body = { id: functions.getMaxId(dao.entry) + 1, ...req.body };
+	functions.save(body, dao.entry);
 	res.status(200).json(body);
 });
 
 router.delete("/:id", middleware.validarUserLogin, (req, res) => {
 	const id = req.params.id;
-	if (dao.borrar(id)) {
+	if (functions.borrar(id, dao.entry)) {
 		res.sendStatus(202);
 	} else {
 		res.sendStatus(404);
@@ -43,8 +45,9 @@ router.delete("/:id", middleware.validarUserLogin, (req, res) => {
 });
 
 router.put("/:id", middleware.validarUserLogin, (req, res) => {
-	const id = req.params.id;
-	if (dao.update(id, req.body)) {
+	console.log(req.body);
+	const body = { ...req.body };
+	if (functions.update(body, dao.entry)) {
 		res.sendStatus(202);
 	} else {
 		res.sendStatus(404);

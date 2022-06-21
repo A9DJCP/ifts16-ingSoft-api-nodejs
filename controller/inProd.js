@@ -2,13 +2,12 @@ const { v4: uuidv4 } = require("uuid");
 const router = require("express").Router();
 let dao = require("../dataccess/prodEntry");
 const middleware = require("../utils/middleware");
-
-/*--------------------PRODUCTOS--------------------*/
+const functions = require("../dataccess/functions");
 
 //USUARIO SIN LOGEAR
 
 router.get("/", (req, res) => {
-	res.status(200).json(dao.getAll());
+	res.status(200).json(functions.getAll(dao.entry));
 });
 
 /*Obtener multiples Filtrado --> Pendiente de revisión a ver si se puede hacer así*/
@@ -39,7 +38,7 @@ router.get("/:filtro/:val", (req, res) => {
 
 router.get("/:id", (req, res) => {
 	const id = req.params.id;
-	const data = dao.getOne(id);
+	const data = functions.getOne(id, dao.entry);
 	if (data) {
 		res.status(200).json(data);
 	} else {
@@ -51,15 +50,14 @@ router.get("/:id", (req, res) => {
 
 router.post("/", middleware.validarUserLogin, (req, res) => {
 	//const body = { ...req.body, id: uuidv4(), user: req.user };
-	const body = { id: dao.getMaxId() + 1, ...req.body };
-	dao.save(body);
+	const body = { id: functions.getMaxId(dao.entry) + 1, ...req.body };
+	functions.save(body, dao.entry);
 	res.status(200).json(body);
 });
 
 router.delete("/:id", middleware.validarUserLogin, (req, res) => {
 	const id = req.params.id;
-
-	if (dao.borrar(id)) {
+	if (functions.borrar(id, dao.entry)) {
 		res.sendStatus(202);
 	} else {
 		res.sendStatus(404);
@@ -67,8 +65,9 @@ router.delete("/:id", middleware.validarUserLogin, (req, res) => {
 });
 
 router.put("/:id", middleware.validarUserLogin, (req, res) => {
-	const body = { ...req.body, id: uuidv4(), user: req.user };
-	if (dao.update(body.id, body)) {
+	console.log(req.body);
+	const body = { ...req.body };
+	if (functions.update(body, dao.entry)) {
 		res.sendStatus(202);
 	} else {
 		res.sendStatus(404);

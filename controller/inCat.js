@@ -2,20 +2,18 @@ const router = require("express").Router();
 let dao = require("../dataccess/catEntry");
 const { v4: uuidv4 } = require("uuid");
 const middleware = require("../utils/middleware");
+const functions = require("../dataccess/functions");
 
-/*--------------------CATEGORIAS--------------------*/
 /*Un usuario invitado sin logear Puede Ver todas las categorias que pueden contener nuestros productos*/
 //USUARIO SIN LOGEAR
-
-/* Obtener todo */
 router.get("/", (req, res) => {
-	res.status(200).json(dao.getAll());
+	res.status(200).json(functions.getAll(dao.entry));
 });
 
 /* Obtener uno especifico */
 router.get("/:id", (req, res) => {
 	const id = req.params.id;
-	const data = dao.getOne(id);
+	const data = functions.getOne(id, dao.entry);
 	if (data) {
 		res.status(200).json(data);
 	} else {
@@ -25,21 +23,27 @@ router.get("/:id", (req, res) => {
 
 /*Un usuario logeado como ADMIN puede postear categorias, modificarlos y borrarlos*/
 
-//USUARIO SIN LOGEAR
+//USUARIO LOGEADO COMO ADMIN
 router.post("/", middleware.validarUserLogin, (req, res) => {
-	const body = { ...req.body, id: uuidv4(), user: req.user };
-	dao.save(body);
+	//const body = { ...req.body, id: uuidv4(), user: req.user };
+	const body = { id: functions.getMaxId(dao.entry) + 1, ...req.body };
+	functions.save(body, dao.entry);
 	res.status(200).json(body);
 });
 
-/* Borrar un elemento --> No se pueden borrar las categorias ya que hay productos relacionados con ellas. 
-Además se considera que no pueden eliminarse, sino solo añadirse o modificarse.*/
-
-/* Modificar un elemento */
-router.put("/:id", middleware.validarUserLogin, (req, res) => {
+router.delete("/:id", middleware.validarUserLogin, (req, res) => {
 	const id = req.params.id;
+	if (functions.borrar(id, dao.entry)) {
+		res.sendStatus(202);
+	} else {
+		res.sendStatus(404);
+	}
+});
 
-	if (dao.update(id, req.body)) {
+router.put("/:id", middleware.validarUserLogin, (req, res) => {
+	console.log(req.body);
+	const body = { ...req.body };
+	if (functions.update(body, dao.entry)) {
 		res.sendStatus(202);
 	} else {
 		res.sendStatus(404);

@@ -25,7 +25,7 @@ router.post("/", (req, res) => {
 		}
 		//El token recibe la data y una palabra secreta unica
 		const token = jwt.sign(tokenData, process.env.JWTSECRET, {
-			expiresIn: "1h",
+			expiresIn: "1m",
 		});
 		res
 			.status(200)
