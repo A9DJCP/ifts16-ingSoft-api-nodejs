@@ -55,7 +55,7 @@ router.put(
 	middleware.validarUserLogin,
 	middleware.validarAdmin,
 	(req, res) => {
-		console.log(req.body);
+		console.log("Cuerpo: ", req.body);
 		const body = { ...req.body };
 		if (functions.update(body, dao.entry)) {
 			res.sendStatus(202);

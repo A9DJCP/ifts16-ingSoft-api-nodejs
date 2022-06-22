@@ -2,19 +2,15 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const consoleData = (req, res, next) => {
-	//Req es la informacion que enviamos desde afuera, la peticion
-	//Res es el canal por el que puedo responder
-	//Next es el siguiente middleware o paso una vez que ya hizo su funcion el middleware
 	console.log("Method:" + req.method);
 	console.log("Path:" + req.path);
 	console.log("Body:", req.body);
-
 	console.log("-------");
 	next();
 };
 
 const unkEP = (req, res) => {
-	res.status(404).send({ error: "unknown endpoint" });
+	res.status(404).send({ error: "Unknown Endpoint" });
 };
 
 const processToken = (req, res, next) => {
@@ -31,30 +27,33 @@ const validarUserLogin = (req, res, next) => {
 	if (!req.token) {
 		return res.status(401).json({ error: "token missing" });
 	}
+	console.log("HITHERE");
+	//ACA TIRA ERROR CUANDO TE LOGEAS COMO CLIENTE. TIRA TOKEN EXPIRED. PERO SI LOGEAS COMO ADMIN FUNCIONA BIEN. NO SE BIEN PORQUE TODAVIA
 	const decodeToken = jwt.verify(req.token, process.env.JWTSECRET);
-
+	console.log("HITHERE");
 	if (!decodeToken.id) {
-		return res.status(401).json({ error: "token invalid" });
+		return res.status(401).json({ error: "Invalid Token" });
 	}
-	if (jwt.TokenExpiredError) {
-		return res.status(401).json({ error: "Token Expired" });
-	}
+
 	req.user = decodeToken;
 	next();
 };
 
 const validarAdmin = (req, res, next) => {
+	console.log("HOLA BUENOS DIAS");
+	console.log("req.token: ", req.token);
 	const decodeToken = jwt.verify(req.token, process.env.JWTSECRET);
+	console.log("decodeToken: ", decodeToken);
 	const permisos = decodeToken.permisos;
 
 	if (permisos == "admin") {
 		req.user = decodeToken;
+		console.log("Soy Admin");
 	} else {
+		console.log("No Soy Admin");
 		return res.status(401).json({ error: "No admin token" });
 	}
-	if (jwt.TokenExpiredError) {
-		return res.status(401).json({ error: "Token Expired" });
-	}
+
 	next();
 };
 

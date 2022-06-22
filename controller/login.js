@@ -16,23 +16,20 @@ router.post("/", (req, res) => {
 				id: body2.id,
 				permisos: "admin",
 			};
-			console.log("tokenData: ", tokenData);
 		} else {
 			tokenData = {
 				nickname: body.nickname,
 				id: body2.id,
-				permisos: "client",
+				permisos: "cliente",
 			};
 		}
-		//El token recibe la data y una palabra secreta unica
 		const token = jwt.sign(tokenData, process.env.JWTSECRET, {
-			expiresIn: "1m",
+			expiresIn: "5m",
 		});
 		res
 			.status(200)
 			.send({ token, nickname: body.nickname, permisos: tokenData.permisos });
 	} else {
-		//usuario incorrecto
 		return res.status(401).json({ error: "credenciales incorrectas" });
 	}
 });

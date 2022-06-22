@@ -48,30 +48,45 @@ router.get("/:id", (req, res) => {
 
 //USUARIO LOGEADO COMO ADMIN
 
-router.post("/", middleware.validarUserLogin, (req, res) => {
-	//const body = { ...req.body, id: uuidv4(), user: req.user };
-	const body = { id: functions.getMaxId(dao.entry) + 1, ...req.body };
-	functions.save(body, dao.entry);
-	res.status(200).json(body);
-});
-
-router.delete("/:id", middleware.validarUserLogin, (req, res) => {
-	const id = req.params.id;
-	if (functions.borrar(id, dao.entry)) {
-		res.sendStatus(202);
-	} else {
-		res.sendStatus(404);
+router.post(
+	"/",
+	middleware.validarUserLogin,
+	middleware.validarAdmin,
+	(req, res) => {
+		//const body = { ...req.body, id: uuidv4(), user: req.user };
+		const body = { id: functions.getMaxId(dao.entry) + 1, ...req.body };
+		functions.save(body, dao.entry);
+		res.status(200).json(body);
 	}
-});
+);
 
-router.put("/:id", middleware.validarUserLogin, (req, res) => {
-	console.log(req.body);
-	const body = { ...req.body };
-	if (functions.update(body, dao.entry)) {
-		res.sendStatus(202);
-	} else {
-		res.sendStatus(404);
+router.delete(
+	"/:id",
+	middleware.validarUserLogin,
+	middleware.validarAdmin,
+	(req, res) => {
+		const id = req.params.id;
+		if (functions.borrar(id, dao.entry)) {
+			res.sendStatus(202);
+		} else {
+			res.sendStatus(404);
+		}
 	}
-});
+);
+
+router.put(
+	"/:id",
+	middleware.validarUserLogin,
+	middleware.validarAdmin,
+	(req, res) => {
+		console.log(req.body);
+		const body = { ...req.body };
+		if (functions.update(body, dao.entry)) {
+			res.sendStatus(202);
+		} else {
+			res.sendStatus(404);
+		}
+	}
+);
 
 module.exports = router;

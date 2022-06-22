@@ -13,8 +13,8 @@ POST http://localhost:8000/login
 Content-Type: application/json
 
 {
-"nickname":"mariaMF", 
-"psw":"hola1234"
+		"nickname": "lulaluna",
+		"psw": "1234"
 }
 
 // ---------------------------- PRODUCTOS ---------------------------- //
@@ -101,16 +101,17 @@ Authorization: Bearer {{ login.response.body.token }}
 
 ###
 PUT http://localhost:8000/cat/4
-Content-Type: application/json
+Content-Type: application/json 
 Authorization: Bearer {{ login.response.body.token }}
 
 {
     "id":4,    
-    "desc":"Undefined",
+    "desc":"Undefined"
 }
 
 // ----------- DELETE - SOLO ADMIN ----------- //
-DELETE http://localhost:8000/cat/4
+###
+DELETE http://localhost:8000/cat/5
 Authorization: Bearer {{ login.response.body.token }}
 
 
@@ -122,9 +123,10 @@ Authorization: Bearer {{ login.response.body.token }}
 POST http://127.0.0.1:8000/scat
 Content-Type: application/json
 Authorization: Bearer {{ login.response.body.token }}
+
 {
     "id": 4,
-    "desc": "Cabeza",
+    "desc": "Cabeza"
 }
 
 
@@ -163,6 +165,7 @@ Authorization: Bearer {{ login.response.body.token }}
 POST http://127.0.0.1:8000/marca
 Content-Type: application/json
 Authorization: Bearer {{ login.response.body.token }}
+
 {
     "id": 4,
     "desc": "Universal"
@@ -176,7 +179,7 @@ Authorization: Bearer {{ login.response.body.token }}
 
 {
     "id":4,    
-    "desc":"Universal Clothes",
+    "desc":"Universal Clothes"
 }
 ###
 PUT http://localhost:8000/marca/4
@@ -185,7 +188,7 @@ Authorization: Bearer {{ login.response.body.token }}
 
 {
     "id":4,    
-    "desc":"Universal",
+    "desc":"Universal"
 }
 
 // ----------- DELETE - SOLO ADMIN ----------- //
@@ -197,7 +200,8 @@ Authorization: Bearer {{ login.response.body.token }}
 
 
 // ----------- GET DEL USUARIO PROPIO - SOLO USUARIOS LOGEADOS ----------- //
-GET http:/localhost:8000/user/me
+###
+GET http://localhost:8000/user/me
 Authorization: Bearer {{ login.response.body.token }}
 
 
@@ -216,17 +220,18 @@ Authorization: Bearer {{ login.response.body.token }}
 
 
 // ----------- POST - SOLO ADMIN ----------- //
+//FORMATO user(id, nick, nom, ape, email)
 ###
 POST http://127.0.0.1:8000/user
-//FORMATO user(id, nick, nom, ape, email)
 Content-Type: application/json
 Authorization: Bearer {{ login.response.body.token }}
+
 {
     "id": 4,
     "nick": "gblack223",
     "nom":"Geremias",
     "ape":"Johnson",
-    "email":"gjohnson@gmail.com",
+    "email":"gjohnson@gmail.com"
 }
 
 
@@ -259,5 +264,5 @@ Authorization: Bearer {{ login.response.body.token }}
 
 // ----------- DELETE - SOLO ADMIN ----------- //
 ###
-DELETE http://localhost:8000/user/1
+DELETE http://localhost:8000/user/2
 Authorization: Bearer {{ login.response.body.token }}

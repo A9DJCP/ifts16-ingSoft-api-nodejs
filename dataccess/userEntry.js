@@ -12,7 +12,7 @@ let entry = [
 	{
 		id: 2,
 		nickname: "lulaluna",
-		psw: "algopsw",
+		psw: "1234",
 		name: "Luna",
 		sname: "Gomez",
 		email: "lluna@gmail.com",
