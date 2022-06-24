@@ -38,16 +38,25 @@ const buscarUsuario = (nick) => {
 	}
 };
 
-const getByFiltro = (permisosF) => {
-	let entryFiltered = [];
-	let permisos;
-	for (let i = 0; i < entry.length; i++) {
-		permisos = entry[i].permisos.toLowerCase();
-		if (permisos == permisosF || permisosF == "all") {
-			entryFiltered.push(entry[i]);
-		}
+// const getByFiltro = (permisosF) => {
+// 	let entryFiltered = [];
+// 	let permisos;
+// 	for (let i = 0; i < entry.length; i++) {
+// 		permisos = entry[i].permisos.toLowerCase();
+// 		if (permisos == permisosF || permisosF == "all") {
+// 			entryFiltered.push(entry[i]);
+// 		}
+// 	}
+// 	return entryFiltered;
+// };
+
+const getByFiltro = (permisosFiltro) => {
+	const permiso = entry.filter(
+		(personas) => personas.permisos == permisosFiltro
+	);
+	if (permiso) {
+		return permiso;
 	}
-	return entryFiltered;
 };
 
 module.exports = {

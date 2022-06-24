@@ -267,3 +267,9 @@ Authorization: Bearer {{ login.response.body.token }}
 ###
 DELETE http://localhost:8000/user/2
 Authorization: Bearer {{ login.response.body.token }}
+
+
+//Req incorrecto para generar unknown endpoint
+###
+GET http://localhost:8000/u
+Authorization: Bearer {{ login.response.body.token }}

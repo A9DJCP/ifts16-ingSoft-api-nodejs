@@ -48,7 +48,14 @@ router.get(
 	middleware.validarUserLogin,
 	middleware.validarAdmin,
 	(req, res) => {
-		res.status(200).json(dao.getByFiltro(req.params.val));
+		const val = req.params.val;
+		const data = dao.getByFiltro(val, dao.entry);
+		if (!data) {
+			res.sendStatus(404).json({ error: "error" });
+		} else {
+			res.status(200).json(data);
+		}
+		//res.status(200).json(dao.getByFiltro(req.params.val));
 	}
 );
 
