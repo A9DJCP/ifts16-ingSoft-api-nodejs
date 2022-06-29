@@ -76,7 +76,56 @@ const getByFiltro = (catF, sCatF, marcaF) => {
 	return entryFiltered;
 };
 
+const getAll = (query) => {
+	//FORMATO product(id, desc, price{USD}, stock, marca, cat, sCat)
+
+	let search = entry;
+	//Filtrar por Descripcion - Search Includes
+	if (query.desc) {
+		search = search.filter((e) => e.desc.toLowerCase().includes(query.desc));
+	}
+
+	//Filtrar por Marca - Filtro Igual
+	if (query.marca) {
+		search = search.filter((e) => e.marca.toLowerCase() === query.marca);
+	}
+
+	//Filtrar por Cat - Filtro Igual
+	if (query.cat) {
+		search = search.filter((e) => e.cat.toLowerCase() === query.cat);
+	}
+
+	//Filtrar por SubCat - Filtro Igual
+	if (query.sCat) {
+		search = search.filter((e) => e.sCat.toLowerCase() === query.sCat);
+	}
+
+	//Filtrar por varias marcas - Filtro Igual separado con comas
+	if (query.multmarca) {
+		search = search.filter((e) =>
+			query.multmarca.split(",").includes(e.marca.toLowerCase())
+		);
+	}
+
+	//Filtrar por varias Categorias - Filtro Igual separado con comas
+	if (query.multcat) {
+		search = search.filter((e) =>
+			query.multcat.split(",").includes(e.cat.toLowerCase())
+		);
+	}
+
+	//Filtrar por varias SubCategorias - Filtro Igual separado con comas
+	if (query.multScat) {
+		search = search.filter((e) =>
+			query.multScat.split(",").includes(e.sCat.toLowerCase())
+		);
+	}
+
+	return search;
+};
+
 module.exports = {
 	getByFiltro,
 	entry,
+	getAll,
 };

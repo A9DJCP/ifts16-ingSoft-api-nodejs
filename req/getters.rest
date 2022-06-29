@@ -7,11 +7,9 @@ GET http://localhost:8000/prod
 ###
 GET http://localhost:8000/prod/1
 
-### Filtros Multiples --> Todavia no funciona
-GET http://localhost:8000/prod?cat=male&sCat=all&marca=all
 
 
-#Filtros Simples
+//FILTROS SIMPLES
 ###
 GET http://localhost:8000/prod/cat/male
 
@@ -24,6 +22,20 @@ GET http://localhost:8000/prod/marca/rebook
 ###
 GET http://localhost:8000/prod/filtroMal/algo
 
+//BUSQUEDAS CON FILTROS
+
+### Busqueda filtrada con una marca, cat y sCat
+GET http://localhost:8000/prod?marca=adidas&cat=male&sCat=calzado
+
+### Busqueda filtrada con varias marcas, cats y sCats
+GET http://localhost:8000/prod?multmarca=adidas,nike&multcat=male,female&multScat=calzado,pantalones
+
+###
+GET http://localhost:8000/prod?multmarca=adidas,nike
+
+### Búsqueda por desc
+GET http://localhost:8000/prod?desc=remera
+
 
 // ---------------------------- CATEGORIAS ---------------------------- //
 ###
@@ -31,6 +43,9 @@ GET http://localhost:8000/cat
 
 ###
 GET http://localhost:8000/cat/2
+
+### Búsqueda por desc
+GET http://localhost:8000/cat?desc=female
 
 // ---------------------------- SUBCATEGORIAS ---------------------------- //
 
@@ -40,6 +55,8 @@ GET http://localhost:8000/scat
 ###
 GET http://localhost:8000/scat/2
 
+### Búsqueda por desc
+GET http://localhost:8000/sCat?desc=torso
 
 // ---------------------------- MARCAS ---------------------------- //
 ###
@@ -47,5 +64,9 @@ GET http://localhost:8000/marca
 
 ###
 GET http://localhost:8000/marca/2
+
+### Búsqueda por nombre
+GET http://localhost:8000/marca?nom=adidas
+
 
 // ---------------------------- USUARIOS ---------------------------- // --> Los Getters de usuario tienen que ser con Token asi que estan en el otro archivo .rest

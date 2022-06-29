@@ -11,7 +11,7 @@ const functions = require("../dataccess/functions");
 
 /* Obtener todo */
 router.get("/", (req, res) => {
-	res.status(200).json(functions.getAll(dao.entry));
+	res.status(200).json(dao.getAll(req.query));
 });
 
 /* Obtener uno especifico */

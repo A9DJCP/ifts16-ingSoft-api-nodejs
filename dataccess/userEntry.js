@@ -1,4 +1,4 @@
-//FORMATO user(id, nick, nom, ape, email, permisos)
+//FORMATO user(id, nickname, name, sname, email, permisos)
 let entry = [
 	{
 		id: 1,
@@ -38,18 +38,6 @@ const buscarUsuario = (nick) => {
 	}
 };
 
-// const getByFiltro = (permisosF) => {
-// 	let entryFiltered = [];
-// 	let permisos;
-// 	for (let i = 0; i < entry.length; i++) {
-// 		permisos = entry[i].permisos.toLowerCase();
-// 		if (permisos == permisosF || permisosF == "all") {
-// 			entryFiltered.push(entry[i]);
-// 		}
-// 	}
-// 	return entryFiltered;
-// };
-
 const getByFiltro = (permisosFiltro) => {
 	const permiso = entry.filter(
 		(personas) => personas.permisos == permisosFiltro
@@ -59,8 +47,50 @@ const getByFiltro = (permisosFiltro) => {
 	}
 };
 
+const getAll = (query) => {
+	//FORMATO user(id, nickname, name, sname, email, permisos)
+
+	let search = entry;
+	//Filtrar por nick - Search Includes
+	if (query.nick) {
+		search = search.filter((e) =>
+			e.nickname.toLowerCase().includes(query.nick)
+		);
+	}
+
+	//Filtrar por nombre - Search Includes
+	if (query.nom) {
+		search = search.filter((e) => e.name.toLowerCase().includes(query.nom));
+	}
+
+	//Filtrar por apellido - Search Includes
+	if (query.ape) {
+		search = search.filter((e) => e.sname.toLowerCase().includes(query.ape));
+	}
+
+	//Filtrar por email - Search Includes
+	if (query.email) {
+		search = search.filter((e) => e.email.toLowerCase().includes(query.email));
+	}
+
+	//Filtrar por Permisos - Filtro Igual
+	if (query.permisos) {
+		search = search.filter((e) => e.permisos.toLowerCase() === query.permisos);
+	}
+
+	//Filtrar por varios permisos marcas - Filtro Igual separado con comas
+	if (query.multperm) {
+		search = search.filter((e) =>
+			query.multperm.split(",").includes(e.permisos.toLowerCase())
+		);
+	}
+
+	return search;
+};
+
 module.exports = {
 	entry,
 	getByFiltro,
 	buscarUsuario,
+	getAll,
 };

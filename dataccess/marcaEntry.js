@@ -14,4 +14,15 @@ let entry = [
 	},
 ];
 
-module.exports = { entry };
+const getAll = (query) => {
+	//FORMATO marca(id, nombre)
+
+	let search = entry;
+	//Filtrar por Nombre - Search Includes
+	if (query.nom) {
+		search = search.filter((e) => e.nombre.toLowerCase().includes(query.nom));
+	}
+	return search;
+};
+
+module.exports = { entry, getAll };

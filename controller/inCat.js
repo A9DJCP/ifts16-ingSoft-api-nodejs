@@ -7,7 +7,7 @@ const functions = require("../dataccess/functions");
 /*Un usuario invitado sin logear Puede Ver todas las categorias que pueden contener nuestros productos*/
 //USUARIO SIN LOGEAR
 router.get("/", (req, res) => {
-	res.status(200).json(functions.getAll(dao.entry));
+	res.status(200).json(dao.getAll(req.query));
 });
 
 /* Obtener uno especifico */

@@ -7,15 +7,8 @@ const functions = require("../dataccess/functions");
 //USUARIO SIN LOGEAR
 
 router.get("/", (req, res) => {
-	res.status(200).json(functions.getAll(dao.entry));
+	res.status(200).json(dao.getAll(req.query));
 });
-
-/*Obtener multiples Filtrado --> Pendiente de revisión a ver si se puede hacer así*/
-// router.get("/prod?cat=:valA&sCat=:valB&marca=:valC", (req, res) => {
-// 	let valores = [req.params.valA, req.params.valB, req.params.valC];
-// 	console.log(valores);
-// 	res.status(200).json(dao.getByFiltro(valores[0], valores[1], valores[2]));
-// });
 
 /*Obtener con Filtro Simple*/
 router.get("/:filtro/:val", (req, res) => {

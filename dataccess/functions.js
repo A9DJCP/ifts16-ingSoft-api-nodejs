@@ -1,7 +1,3 @@
-const getAll = (entry) => {
-	return entry;
-};
-
 const getOne = (id, entry) => {
 	return entry.find((registro) => registro.id == id);
 };
@@ -33,7 +29,6 @@ const getMaxId = (entry) => {
 };
 
 module.exports = {
-	getAll,
 	getOne,
 	save,
 	borrar,

@@ -18,4 +18,16 @@ let entry = [
 	},
 ];
 
-module.exports = { entry };
+const getAll = (query) => {
+	//FORMATO categoria(id, desc)
+
+	let search = entry;
+	//Filtrar por Descripcion - Search Includes
+	if (query.desc) {
+		search = search.filter((e) => e.desc.toLowerCase().includes(query.desc));
+	}
+
+	return search;
+};
+
+module.exports = { entry, getAll };

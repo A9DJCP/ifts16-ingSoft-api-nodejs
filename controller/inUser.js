@@ -23,7 +23,7 @@ router.get(
 	middleware.validarUserLogin,
 	middleware.validarAdmin,
 	(req, res) => {
-		res.status(200).json(functions.getAll(dao.entry));
+		res.status(200).json(dao.getAll(req.query));
 	}
 );
 

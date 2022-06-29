@@ -215,9 +215,23 @@ Authorization: Bearer {{ login.response.body.token }}
 GET http://localhost:8000/user/1
 Authorization: Bearer {{ login.response.body.token }}
 
-###
+### FILTRO SIMPLE
 GET http://localhost:8000/user/permisos/admin
 Authorization: Bearer {{ login.response.body.token }}
+
+### BUSQUEDA CON FILTROS
+GET http://localhost:8000/user?nick=a&nom=n&ape=ez&email=.com&multperm=admin,cliente
+Authorization: Bearer {{ login.response.body.token }}
+
+###
+GET http://localhost:8000/user?permisos=cliente
+Authorization: Bearer {{ login.response.body.token }}
+
+
+###
+GET http://localhost:8000/user?multperm=admin,cliente
+Authorization: Bearer {{ login.response.body.token }}
+
 
 
 // ----------- POST - SOLO ADMIN ----------- //
