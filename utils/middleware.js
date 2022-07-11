@@ -27,10 +27,7 @@ const validarUserLogin = (req, res, next) => {
 	if (!req.token) {
 		return res.status(401).json({ error: "token missing" });
 	}
-	console.log("HITHERE");
-	//ACA TIRA ERROR CUANDO TE LOGEAS COMO CLIENTE. TIRA TOKEN EXPIRED. PERO SI LOGEAS COMO ADMIN FUNCIONA BIEN. NO SE BIEN PORQUE TODAVIA
 	const decodeToken = jwt.verify(req.token, process.env.JWTSECRET);
-	console.log("HITHERE");
 	if (!decodeToken.id) {
 		return res.status(401).json({ error: "Invalid Token" });
 	}
@@ -40,17 +37,12 @@ const validarUserLogin = (req, res, next) => {
 };
 
 const validarAdmin = (req, res, next) => {
-	console.log("HOLA BUENOS DIAS");
-	console.log("req.token: ", req.token);
 	const decodeToken = jwt.verify(req.token, process.env.JWTSECRET);
-	console.log("decodeToken: ", decodeToken);
 	const permisos = decodeToken.permisos;
 
 	if (permisos == "admin") {
 		req.user = decodeToken;
-		console.log("Soy Admin");
 	} else {
-		console.log("No Soy Admin");
 		return res.status(401).json({ error: "No admin token" });
 	}
 
