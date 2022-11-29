@@ -102,14 +102,17 @@ const borrar = async (id, entry) => {
 	return false;
 };
 
-const update = (body, entry) => {
-	// const data = await getOne (id)
-	const index = entry.findIndex((registro) => registro.id == body.id);
-	if (index >= 0) {
-		entry[index] = body;
-		return true;
-	}
-	return false;
+const update = async (body, entry) => {
+	const id = entry.findIndex((registro) => registro.id == body.id);
+	const data = await getOne(id);
+	data.title = body.title;
+	data.nickname = body.nickname;
+	data.password = body.password;
+	data.nombre = body.nombre;
+	data.apellido = body.apellido;
+	data.email = body.email;
+	await data.save();
+	return data;
 };
 
 /*

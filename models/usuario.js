@@ -15,6 +15,10 @@ Usuario.init(
 			type: DataTypes.STRING(120),
 			allowNull: false,
 		},
+		password: {
+			type: DataTypes.STRING(120),
+			allowNull: false,
+		},
 		nombre: {
 			type: DataTypes.STRING(120),
 			allowNull: false,
