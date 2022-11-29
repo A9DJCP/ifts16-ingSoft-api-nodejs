@@ -1,4 +1,5 @@
 //FORMATO user(id, nickname, name, sname, email, permisos)
+const { Usuario } = require("../models/relaciones.js"); //Busca el objeto Usuario de la clase relaciones.js
 let entry = [
 	{
 		id: 1,
@@ -47,9 +48,15 @@ const getByFiltro = (permisosFiltro) => {
 	}
 };
 
-const getAll = (query) => {
-	//FORMATO user(id, nickname, name, sname, email, permisos)
+const save = async (body) => {
+	const data = { ...body };
+	const Usuario = await Usuario.create(data);
+	return Usuario;
+};
 
+const getAll = async (query) => {
+	const datos = await Usuario.findAll(); /* Me trae todos los datos */
+	return datos;
 	let search = entry;
 	//Filtrar por nick - Search Includes
 	if (query.nick) {
@@ -88,9 +95,34 @@ const getAll = (query) => {
 	return search;
 };
 
+const borrar = async (id, entry) => {
+	await Usuario.destroy({
+		where: { id },
+	});
+	return false;
+};
+
+const update = (body, entry) => {
+	// const data = await getOne (id)
+	const index = entry.findIndex((registro) => registro.id == body.id);
+	if (index >= 0) {
+		entry[index] = body;
+		return true;
+	}
+	return false;
+};
+
+/*
+const getOne = (id) => {
+	return modelo.findByPk(id);
+};
+*/
 module.exports = {
 	entry,
 	getByFiltro,
 	buscarUsuario,
 	getAll,
+	getOne,
+	borrar,
+	save,
 };
