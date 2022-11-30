@@ -18,8 +18,7 @@ Permiso.init(
 	},
 	{
 		sequelize,
-		underscored: true,
-		modelName: "Permiso",
+		modelName: "permiso",
 	}
 );
 

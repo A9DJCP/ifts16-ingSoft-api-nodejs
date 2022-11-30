@@ -9,7 +9,7 @@ connectDb();
 sequelize
 	.sync()
 	.then(() => {
-		console.log("Tablas Creadas Satisfactoriaente");
+		console.log("Tablas Creadas Satisfactoriamente");
 	})
 	.catch((error) => {
 		console.log("Error en la creación de las tablas", error);

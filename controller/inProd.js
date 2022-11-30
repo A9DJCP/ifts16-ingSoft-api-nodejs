@@ -3,35 +3,36 @@ const router = require("express").Router();
 let dao = require("../dataccess/prodEntry");
 const middleware = require("../utils/middleware");
 const functions = require("../dataccess/functions");
+const { Producto } = require("../models/relaciones.js");
 
 //USUARIO SIN LOGEAR
 
-router.get("/", (req, res) => {
-	res.status(200).json(dao.getAll(req.query));
+router.get("/", async (req, res) => {
+	res.status(200).json(await dao.getAll(req.query));
 });
 
 /*Obtener con Filtro Simple*/
-router.get("/:filtro/:val", (req, res) => {
+router.get("/:filtro/:val", async (req, res) => {
 	const filtro = req.params.filtro;
 	switch (filtro) {
 		case "cat":
-			res.status(200).json(dao.getByFiltro(req.params.val, "all", "all"));
+			res.status(200).json(await dao.getByFiltro(req.params.val, "all", "all"));
 			break;
 		case "sCat":
-			res.status(200).json(dao.getByFiltro("all", req.params.val, "all"));
+			res.status(200).json(await dao.getByFiltro("all", req.params.val, "all"));
 			break;
 		case "marca":
-			res.status(200).json(dao.getByFiltro("all", "all", req.params.val));
+			res.status(200).json(await dao.getByFiltro("all", "all", req.params.val));
 			break;
 		default:
-			res.status(200).json(dao.getByFiltro("all", "all", "all"));
+			res.status(200).json(await dao.getByFiltro("all", "all", "all"));
 			break;
 	}
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
 	const id = req.params.id;
-	const data = functions.getOne(id, dao.entry);
+	const data = await functions.getOne(id, Producto);
 	if (data) {
 		res.status(200).json(data);
 	} else {
@@ -45,11 +46,11 @@ router.post(
 	"/",
 	middleware.validarUserLogin,
 	middleware.validarAdmin,
-	(req, res) => {
+	async (req, res) => {
 		//const body = { ...req.body, id: uuidv4(), user: req.user };
 		const body = { id: functions.getMaxId(dao.entry) + 1, ...req.body };
-		functions.save(body, dao.entry);
-		res.status(200).json(body);
+		const data = await functions.save(body, dao.entry);
+		res.status(200).json(data);
 	}
 );
 
@@ -57,9 +58,9 @@ router.delete(
 	"/:id",
 	middleware.validarUserLogin,
 	middleware.validarAdmin,
-	(req, res) => {
+	async (req, res) => {
 		const id = req.params.id;
-		if (functions.borrar(id, dao.entry)) {
+		if (await functions.borrar(id, dao.entry)) {
 			res.sendStatus(202);
 		} else {
 			res.sendStatus(404);
@@ -71,10 +72,10 @@ router.put(
 	"/:id",
 	middleware.validarUserLogin,
 	middleware.validarAdmin,
-	(req, res) => {
+	async (req, res) => {
 		console.log(req.body);
 		const body = { ...req.body };
-		if (functions.update(body, dao.entry)) {
+		if (await functions.update(body, dao.entry)) {
 			res.sendStatus(202);
 		} else {
 			res.sendStatus(404);

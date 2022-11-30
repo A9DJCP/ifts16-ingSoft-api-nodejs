@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 
 const sequelize = new Sequelize(
-	"apiProductos", // nombre de la base de datos
+	"ventasSPL", // nombre de la base de datos
 	"root", // usuario
 	"1234", // passowrd
 	{

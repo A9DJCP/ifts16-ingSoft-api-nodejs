@@ -18,8 +18,7 @@ Categoria.init(
 	},
 	{
 		sequelize,
-		underscored: true, //Desarma los camel cases separando las palabras por guiones
-		modelName: "Categoria",
+		modelName: "categoria",
 	}
 );
 

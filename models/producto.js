@@ -33,8 +33,7 @@ Producto.init(
 	},
 	{
 		sequelize,
-		underscored: true,
-		modelName: "Producto",
+		modelName: "producto",
 	}
 );
 /*Un producto tiene una marca, una categoria y una subcategoria. Estas relaciones estan definidas en relaciones.js*/

@@ -115,17 +115,16 @@ const update = async (body, entry) => {
 	return data;
 };
 
-/*
-const getOne = (id) => {
-	return modelo.findByPk(id);
+const getOne = async (id) => {
+	return Usuario.findByPk(id);
 };
-*/
+
 module.exports = {
 	entry,
 	getByFiltro,
 	buscarUsuario,
 	getAll,
-	getOne,
 	borrar,
 	save,
+	getOne,
 };

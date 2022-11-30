@@ -18,8 +18,7 @@ SubCategoria.init(
 	},
 	{
 		sequelize,
-		underscored: false,
-		modelName: "SubCategoria",
+		modelName: "subCategoria",
 	}
 );
 

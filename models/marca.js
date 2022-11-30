@@ -18,7 +18,6 @@ Marca.init(
 	},
 	{
 		sequelize,
-		underscored: true,
 		modelName: "Marca",
 	}
 );

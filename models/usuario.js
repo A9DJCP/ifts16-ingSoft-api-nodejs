@@ -34,8 +34,7 @@ Usuario.init(
 	},
 	{
 		sequelize,
-		underscored: true,
-		modelName: "Usuario",
+		modelName: "usuario",
 	}
 );
 /*El usuario tiene un permiso. Esta relación está definida en relaciones.js*/

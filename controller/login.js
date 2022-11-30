@@ -3,13 +3,14 @@ const router = require("express").Router();
 require("dotenv").config();
 const usuarios = require("../dataccess/userEntry");
 const functions = require("../dataccess/functions");
+const { Usuario } = require("../models/relaciones.js");
 
 router.post("/", (req, res) => {
 	const { body } = req;
-	const index = usuarios.buscarUsuario(body.nickname) + 1;
-	if (index >= 1) {
+	const index = usuarios.buscarUsuario(body.nickname); // Elimine un +1
+	if (index >= 0) {
 		let tokenData;
-		const body2 = functions.getOne(index, usuarios.entry);
+		const body2 = functions.getOne(index, Usuario);
 		if (body2.permisos == "admin") {
 			tokenData = {
 				nickname: body.nickname,
