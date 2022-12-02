@@ -1,4 +1,5 @@
 //FORMATO categoria(id, desc)
+const functions = require("../dataccess/functions");
 const { Categoria } = require("../models/relaciones.js");
 
 const getAll = async (filter) => {
@@ -19,20 +20,11 @@ const getAll = async (filter) => {
 	return datos;
 };
 
-const updateCat = async (id, body) => {
-	const data = await getOne(id);
-	data.descripcion = body.desc;
-	if (body.categoria) {
-		let categoria = {};
-		if (body.categoria.id) {
-			categoria = await Categoria.findByPk(body.categoria.id);
-		} else {
-			categoria = await Categoria.create(body.categoria);
-		}
-		data.categoriaId = categoria.id;
-	}
+const update = async (id, body) => {
+	const data = await functions.getOne(id, Categoria);
+	data.nombre = body.descripcion;
 	await data.save();
 	return data;
 };
 
-module.exports = { getAll };
+module.exports = { getAll, update };

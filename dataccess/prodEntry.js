@@ -2,6 +2,7 @@ const { Producto } = require("../models/relaciones.js");
 const { Marca } = require("../models/relaciones.js");
 const { Categoria } = require("../models/relaciones.js");
 const { SubCategoria } = require("../models/relaciones.js");
+const functions = require("../dataccess/functions");
 
 //FORMATO product(id, desc, price{USD}, stock, marca, cat, sCat)
 
@@ -159,7 +160,20 @@ const buscarCodCat = async (nombreCat) => {
 	return datos.codCat;
 };
 
+const update = async (id, body, entry) => {
+	const data = await functions.getOne(id, Producto);
+	data.descripcion = body.descripcion;
+	data.precio = body.precio;
+	data.stock = body.stock;
+	data.MarcaCodMarca = body.MarcaCodMarca;
+	data.categoriumCodCat = body.categoriumCodCat;
+	data.subCategoriumCodSCat = body.subCategoriumCodSCat;
+	await data.save();
+	return data;
+};
+
 module.exports = {
 	getByFiltro,
 	getAll,
+	update,
 };

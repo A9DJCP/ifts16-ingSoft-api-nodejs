@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
 			};
 		}
 		const token = jwt.sign(tokenData, process.env.JWTSECRET, {
-			expiresIn: "5m",
+			expiresIn: "15m",
 		});
 		res.status(200).send({
 			token,

@@ -1,6 +1,7 @@
 //FORMATO user(id, nickname, name, sname, email, permisos)
 const { Usuario } = require("../models/relaciones.js");
 const { Permiso } = require("../models/relaciones.js");
+const functions = require("../dataccess/functions");
 
 const buscarUsuario = async (nickname) => {
 	let options;
@@ -138,22 +139,14 @@ const getAll = async (filter) => {
 	return datos;
 };
 
-const borrar = async (id, entry) => {
-	await Usuario.destroy({
-		where: { id },
-	});
-	return false;
-};
-
-const update = async (body, entry) => {
-	const id = entry.findIndex((registro) => registro.id == body.id);
-	const data = await getOne(id);
-	data.title = body.title;
+const update = async (id, body, entry) => {
+	const data = await functions.getOne(id, Usuario);
 	data.nickname = body.nickname;
 	data.password = body.password;
 	data.nombre = body.nombre;
 	data.apellido = body.apellido;
 	data.email = body.email;
+	data.permisoCodPermiso = body.permisoCodPermiso;
 	await data.save();
 	return data;
 };
@@ -162,6 +155,5 @@ module.exports = {
 	getByFiltro,
 	buscarUsuario,
 	getAll,
-	borrar,
 	update,
 };

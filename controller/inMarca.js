@@ -56,9 +56,8 @@ router.put(
 	middleware.validarUserLogin,
 	middleware.validarAdmin,
 	async (req, res) => {
-		console.log(req.body);
 		const body = { ...req.body };
-		if (await functions.update(body, dao.entry)) {
+		if (await dao.update(req.params.id, body)) {
 			res.sendStatus(202);
 		} else {
 			res.sendStatus(404);

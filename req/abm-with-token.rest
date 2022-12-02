@@ -313,37 +313,33 @@ Authorization: Bearer {{ login.response.body.token }}
 
 
 // ---------------------------- PRODUCTOS ---------------------------- //
-//FORMATO product(id, desc, price{USD}, stock, marca, cat, sCat)
-
 // ----------- PUT - SOLO ADMIN ----------- //
 ###
-PUT http://localhost:8000/prod/7
+PUT http://localhost:8000/prod/2
 Content-Type: application/json 
 Authorization: Bearer {{ login.response.body.token }}
 
 {
-    "id": 7,
-    "desc": "Sombrero Clasico Blanco",
-    "price":70,
+    "descripcion": "Remera Clasica Tipo A Verde",
+    "precio":70,
     "stock":5000,
-    "marca":"Universal",
-    "cat":"Undefined",
-    "sCat":"Cabeza"
+    "MarcaCodMarca":2,
+    "categoriumCodCat":3,
+    "subCategoriumCodSCat":1
 }
 
 ###
-PUT http://localhost:8000/prod/7
+PUT http://localhost:8000/prod/2
 Content-Type: application/json 
 Authorization: Bearer {{ login.response.body.token }}
 
 {
-    "id": 7,
-    "desc": "Sombrero Clasico Negro",
-    "price":80,
-    "stock":5000,
-    "marca":"Universal",
-    "cat":"Undefined",
-    "sCat":"Cabeza"
+    "descripcion": "Remera Clasica Tipo A Roja",
+    "precio":50,
+    "stock":10000,
+    "MarcaCodMarca":4,
+    "categoriumCodCat":1,
+    "subCategoriumCodSCat":1
 }
 
 // ---------------------------- CATEGORIAS ---------------------------- //
@@ -355,8 +351,7 @@ Content-Type: application/json
 Authorization: Bearer {{ login.response.body.token }}
 
 {
-    "id":4,    
-    "desc":"Indefinido"
+    "descripcion":"Indefinido"
 }
 
 ###
@@ -365,8 +360,7 @@ Content-Type: application/json
 Authorization: Bearer {{ login.response.body.token }}
 
 {
-    "id":4,    
-    "desc":"Undefined"
+    "descripcion":"Undefined"
 }
 
 
@@ -375,23 +369,21 @@ Authorization: Bearer {{ login.response.body.token }}
 
 // ----------- PUT - SOLO ADMIN ----------- //
 ###
-PUT http://localhost:8000/scat/4
+PUT http://localhost:8000/scat/3
 Content-Type: application/json
 Authorization: Bearer {{ login.response.body.token }}
 
 {
-    "id": 4,
-    "desc": "Head"
+    "descripcion": "Feet"
 }
 
 ###
-PUT http://localhost:8000/scat/4
+PUT http://localhost:8000/scat/3
 Content-Type: application/json
 Authorization: Bearer {{ login.response.body.token }}
 
 {
-    "id": 4,
-    "desc": "Cabeza"
+    "descripcion": "Calzado"
 }
 
 
@@ -403,8 +395,7 @@ Content-Type: application/json
 Authorization: Bearer {{ login.response.body.token }}
 
 {
-    "id":4,    
-    "desc":"Universal Clothes"
+    "nombre":"Universal Clothes"
 }
 ###
 PUT http://localhost:8000/marca/4
@@ -412,37 +403,38 @@ Content-Type: application/json
 Authorization: Bearer {{ login.response.body.token }}
 
 {
-    "id":4,    
-    "desc":"Universal"
+    "nombre":"Puma"
 }
 
 // ---------------------------- USUARIOS ---------------------------- //
 
 // ----------- PUT - SOLO ADMIN ----------- //
 ###
-PUT http://localhost:8000/user/4
+PUT http://localhost:8000/user/3
 Content-Type: application/json
 Authorization: Bearer {{ login.response.body.token }}
 
 {
-    "id": 4,
-    "nick": "gblack223",
-    "nom":"Geremias",
-    "ape":"Johnson",
-    "email":"gjohnson@hotmail.com"
+    "nickname": "gblack223",
+    "password":"abcd",
+    "nombre":"Geremias",
+    "apellido":"Johnson",
+    "email":"gjohnson@hotmail.com",
+    "permisoCodPermiso":2
 }
 
 ###
-PUT http://localhost:8000/user/4
+PUT http://localhost:8000/user/3
 Content-Type: application/json
 Authorization: Bearer {{ login.response.body.token }}
 
 {
-    "id": 4,
-    "nick": "gblack223",
-    "nom":"Geremias",
-    "ape":"Johnson",
-    "email":"gjohnson@gmail.com"
+    "nickname": "gwhite223",
+    "password": "1234",
+    "nombre":"Johnatan",
+    "apellido":"Geremy",
+    "email":"jgMY@outlook.com",
+    "permisoCodPermiso":1
 }
 
 

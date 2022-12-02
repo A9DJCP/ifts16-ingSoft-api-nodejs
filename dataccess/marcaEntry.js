@@ -1,4 +1,5 @@
 //FORMATO marca(id, nombre)
+const functions = require("../dataccess/functions");
 const { Marca } = require("../models/relaciones.js");
 const getAll = async (filter) => {
 	let options;
@@ -18,4 +19,11 @@ const getAll = async (filter) => {
 	return datos;
 };
 
-module.exports = { getAll };
+const update = async (id, body) => {
+	const data = await functions.getOne(id, Marca);
+	data.nombre = body.nombre;
+	await data.save();
+	return data;
+};
+
+module.exports = { getAll, update };
