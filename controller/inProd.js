@@ -46,9 +46,10 @@ router.post(
 	middleware.validarUserLogin,
 	middleware.validarAdmin,
 	async (req, res) => {
-		//const body = { ...req.body, id: uuidv4(), user: req.user };
-		const body = { id: functions.getMaxId(dao.entry) + 1, ...req.body };
+		const codProd = (await Producto.max("codProd")) + 1;
+		const body = { id: codProd, ...req.body };
 		const data = await functions.save(body, Producto);
+		console.log("DATAZO:", data);
 		res.status(200).json(data);
 	}
 );
@@ -59,11 +60,8 @@ router.delete(
 	middleware.validarAdmin,
 	async (req, res) => {
 		const id = req.params.id;
-		if (await functions.borrar(id, dao.entry)) {
-			res.sendStatus(202);
-		} else {
-			res.sendStatus(404);
-		}
+		await functions.borrar(id, Producto);
+		res.sendStatus(202);
 	}
 );
 

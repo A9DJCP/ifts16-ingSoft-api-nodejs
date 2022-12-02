@@ -23,12 +23,12 @@ Producto.init(
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			defaultValue: 0,
-			validate: {
+			/*validate: {
 				min: {
 					args: 0,
 					msg: "El stock debe ser mayor o igual a 0.",
 				},
-			},
+			},*/
 		},
 	},
 	{

@@ -29,9 +29,9 @@ router.post(
 	middleware.validarUserLogin,
 	middleware.validarAdmin,
 	async (req, res) => {
-		//const body = { ...req.body, id: uuidv4(), user: req.user };
-		const body = { id: functions.getMaxId(dao.entry) + 1, ...req.body };
-		const data = await functions.save(body, dao.entry);
+		const codCat = (await Categoria.max("codCat")) + 1;
+		const body = { id: codCat, ...req.body };
+		const data = await functions.save(body, Categoria);
 		res.status(200).json(data);
 	}
 );
@@ -42,7 +42,7 @@ router.delete(
 	middleware.validarAdmin,
 	async (req, res) => {
 		const id = req.params.id;
-		await functions.borrar(id, dao.entry);
+		await functions.borrar(id, Categoria);
 		res.sendStatus(202);
 	}
 );

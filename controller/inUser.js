@@ -65,8 +65,9 @@ router.post(
 	middleware.validarUserLogin,
 	middleware.validarAdmin,
 	async (req, res) => {
-		const body = { id: functions.getMaxId(dao.entry) + 1, ...req.body };
-		const data = await functions.save(body, dao.entry);
+		const codU = (await Usuario.max("codUsuario")) + 1;
+		const body = { id: codU, ...req.body };
+		const data = await functions.save(body, Usuario);
 		res.status(200).json(data);
 	}
 );
@@ -77,11 +78,8 @@ router.delete(
 	middleware.validarAdmin,
 	async (req, res) => {
 		const id = req.params.id;
-		if (await functions.borrar(id, dao.entry)) {
-			res.sendStatus(202);
-		} else {
-			res.sendStatus(404);
-		}
+		await functions.borrar(id, Usuario);
+		res.sendStatus(202);
 	}
 );
 

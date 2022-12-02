@@ -159,14 +159,7 @@ const buscarCodCat = async (nombreCat) => {
 	return datos.codCat;
 };
 
-const getOne = async (id, modelo) => {
-	return await modelo.findByPk(id, {
-		include: [{ model: Categoria, required: false }],
-	});
-};
-
 module.exports = {
 	getByFiltro,
 	getAll,
-	getOne,
 };

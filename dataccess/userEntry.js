@@ -4,7 +4,6 @@ const { Permiso } = require("../models/relaciones.js");
 
 const buscarUsuario = async (nickname) => {
 	let options;
-	query = "select codUsuario from usuarios where nickname = " + nickname;
 	options = {
 		attributes: ["codUsuario"],
 		where: {
@@ -31,7 +30,7 @@ const getByFiltro = async (permisosFiltro) => {
 	const PermisoX = await Permiso.findOne(options);
 	const codPermiso = PermisoX.codPermiso;
 
-	if (codPermiso >= 0 && codPermiso <= 2)
+	if (codPermiso >= 0 && codPermiso <= 2) {
 		options = {
 			attributes: [
 				"codUsuario",
@@ -45,14 +44,9 @@ const getByFiltro = async (permisosFiltro) => {
 				permisoCodPermiso: codPermiso,
 			},
 		};
+	}
 	const datos = await Usuario.findAll(options);
 	return datos;
-};
-
-const save = async (body) => {
-	const data = { ...body };
-	const Usuario = await Usuario.create(data);
-	return Usuario;
 };
 
 const getAll = async (filter) => {
@@ -164,16 +158,10 @@ const update = async (body, entry) => {
 	return data;
 };
 
-const getOne = async (id) => {
-	return Usuario.findByPk(id);
-};
-
 module.exports = {
 	getByFiltro,
 	buscarUsuario,
 	getAll,
 	borrar,
-	save,
-	getOne,
 	update,
 };
