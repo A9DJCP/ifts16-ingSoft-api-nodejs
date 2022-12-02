@@ -14,15 +14,16 @@ const save = async (body, modelo) => {
 	return model;
 };
 
-const borrar = (id, entry) => {
-	const index = entry.findIndex((registro) => registro.id == id);
-	if (index >= 0) {
-		entry.splice(index, 1);
-		return true;
-	}
+const borrar = async (id, modelo) => {
+	await modelo.destroy({
+		where: {
+			id,
+		},
+	});
 };
 
-const update = (body, entry) => {
+/*El Update va a haber que migrarlo a cada Dataccess pues depende de los datos de cada estructura.*/
+const update = (body, modelo) => {
 	const index = entry.findIndex((registro) => registro.id == body.id);
 	if (index >= 0) {
 		entry[index] = body;

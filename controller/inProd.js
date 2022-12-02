@@ -1,4 +1,3 @@
-const { v4: uuidv4 } = require("uuid");
 const router = require("express").Router();
 let dao = require("../dataccess/prodEntry");
 const middleware = require("../utils/middleware");
@@ -49,7 +48,7 @@ router.post(
 	async (req, res) => {
 		//const body = { ...req.body, id: uuidv4(), user: req.user };
 		const body = { id: functions.getMaxId(dao.entry) + 1, ...req.body };
-		const data = await functions.save(body, dao.entry);
+		const data = await functions.save(body, Producto);
 		res.status(200).json(data);
 	}
 );

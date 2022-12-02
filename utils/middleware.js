@@ -38,9 +38,9 @@ const validarUserLogin = (req, res, next) => {
 
 const validarAdmin = (req, res, next) => {
 	const decodeToken = jwt.verify(req.token, process.env.JWTSECRET);
-	const permisos = decodeToken.permisos;
+	const permisos = decodeToken.permisoCodPermiso;
 
-	if (permisos == "admin") {
+	if (permisos == 1) {
 		req.user = decodeToken;
 	} else {
 		return res.status(401).json({ error: "No admin token" });

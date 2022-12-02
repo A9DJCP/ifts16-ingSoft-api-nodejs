@@ -5,7 +5,7 @@ Content-Type: application/json
 
 {
 "nickname":"admin", 
-"psw":"12345"
+"psw":"1234"
 }
 
 ### LOGIN COMO CLIENTE
@@ -18,25 +18,10 @@ Content-Type: application/json
 		"psw": "1234"
 }
 
+
+
 // ---------------------------- PRODUCTOS ---------------------------- //
 //FORMATO product(id, desc, price{USD}, stock, marca, cat, sCat)
-
-// ----------- POST - SOLO ADMIN ----------- //
-### 
-
-POST http://127.0.0.1:8000/prod 
-Content-Type: application/json 
-Authorization: Bearer {{ login.response.body.token }}
-
-
-{
-    "desc": "Sombrero Clasico Negro",
-    "price":80,
-    "stock":5000,
-    "marca":"Universal",
-    "cat":"Undefined",
-    "sCat":"Cabeza"
-    }
 
 // ----------- PUT - SOLO ADMIN ----------- //
 ###
@@ -78,16 +63,6 @@ Authorization: Bearer {{ login.response.body.token }}
 // ---------------------------- CATEGORIAS ---------------------------- //
 //FORMATO categoria(id, desc)
 
-// ----------- POST - SOLO ADMIN ----------- //
-### 
-POST http://127.0.0.1:8000/cat
-Content-Type: application/json
-Authorization: Bearer {{ login.response.body.token }}
-
-{
-    "id": 5,
-    "desc": "Most Male"
-}
 
 // ----------- PUT - SOLO ADMIN ----------- //
 ###
@@ -119,17 +94,6 @@ Authorization: Bearer {{ login.response.body.token }}
 // ---------------------------- SUBCATEGORIAS ---------------------------- //
 //FORMATO subcategoria(id, desc)
 
-// ----------- POST - SOLO ADMIN ----------- //
-###
-POST http://127.0.0.1:8000/scat
-Content-Type: application/json
-Authorization: Bearer {{ login.response.body.token }}
-
-{
-    "id": 4,
-    "desc": "Cabeza"
-}
-
 
 // ----------- PUT - SOLO ADMIN ----------- //
 ###
@@ -160,18 +124,6 @@ Authorization: Bearer {{ login.response.body.token }}
 
 // ---------------------------- MARCAS ---------------------------- //
 //FORMATO marca(id, nombre)
-
-// ----------- POST - SOLO ADMIN ----------- //
-###
-POST http://127.0.0.1:8000/marca
-Content-Type: application/json
-Authorization: Bearer {{ login.response.body.token }}
-
-{
-    "id": 4,
-    "desc": "Universal"
-}
-
 // ----------- PUT - SOLO ADMIN ----------- //
 ###
 PUT http://localhost:8000/marca/4
@@ -198,7 +150,7 @@ DELETE http://localhost:8000/marca/1
 Authorization: Bearer {{ login.response.body.token }}
 
 // ---------------------------- USUARIOS ---------------------------- //
-
+//FORMATO user(id, nick, nom, ape, email)
 
 // ----------- GET DEL USUARIO PROPIO - SOLO USUARIOS LOGEADOS ----------- //
 ###
@@ -216,39 +168,12 @@ GET http://localhost:8000/user/1
 Authorization: Bearer {{ login.response.body.token }}
 
 ### FILTRO SIMPLE
-GET http://localhost:8000/user/permisos/admin
+GET http://localhost:8000/user/permisos/cliente
 Authorization: Bearer {{ login.response.body.token }}
 
 ### BUSQUEDA CON FILTROS
-GET http://localhost:8000/user?nick=a&nom=n&ape=ez&email=.com&multperm=admin,cliente
+GET http://localhost:8000/user?nickname=admin&nombre=Emanuel&apellido=Ramirez&email=emaR123@hotmail.com
 Authorization: Bearer {{ login.response.body.token }}
-
-###
-GET http://localhost:8000/user?permisos=cliente
-Authorization: Bearer {{ login.response.body.token }}
-
-
-###
-GET http://localhost:8000/user?multperm=admin,cliente
-Authorization: Bearer {{ login.response.body.token }}
-
-
-
-// ----------- POST - SOLO ADMIN ----------- //
-//FORMATO user(id, nick, nom, ape, email)
-###
-POST http://127.0.0.1:8000/user
-Content-Type: application/json
-Authorization: Bearer {{ login.response.body.token }}
-
-{
-    "id": 4,
-    "nick": "gblack223",
-    "nom":"Geremias",
-    "ape":"Johnson",
-    "email":"gjohnson@gmail.com"
-}
-
 
 // ----------- PUT - SOLO ADMIN ----------- //
 ###
@@ -287,3 +212,253 @@ Authorization: Bearer {{ login.response.body.token }}
 ###
 GET http://localhost:8000/u
 Authorization: Bearer {{ login.response.body.token }}
+
+
+
+
+// ---------------------------- INSERTS ---------------------------- //
+// ---------------------------- INSERTS ---------------------------- //
+
+// ---------------------------- INSERTS ---------------------------- //
+// ---------------------------- INSERTS ---------------------------- //
+
+// ---------------------------- INSERTS ---------------------------- //
+// ---------------------------- INSERTS ---------------------------- //
+
+// ---------------------------- PERMISOS ---------------------------- // --> Los permisos ya deberian estar subidos en la Base de Datos. No son actualizables.
+// ---------------------------- USUARIOS ---------------------------- //
+//FORMATO user(id, nick, nom, ape, email)
+###
+POST http://127.0.0.1:8000/user
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+    "nick": "admin",
+    "psw": "1234",
+    "nom":"Emanuel",
+    "ape":"Ramirez",
+    "email":"emaR123@hotmail.com",
+    "codP":1
+}
+
+
+###
+POST http://127.0.0.1:8000/user
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+    "nick": "LaLuna",
+    "psw": "1234",
+    "nom":"Luna",
+    "ape":"Gomez",
+    "email":"lluna@gmail.com",
+    "codP":2
+}
+
+
+###
+POST http://127.0.0.1:8000/user
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+    "nick": "mariaMF",
+    "psw": "hola1234",
+    "nom":"Maria",
+    "ape":"Fernandez",
+    "email":"MF_123@yahoo.com.ar",
+    "codP":2
+}
+
+
+// ---------------------------- CATEGORIAS ---------------------------- //
+//FORMATO categoria(id, desc)
+
+### 
+POST http://127.0.0.1:8000/cat
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+    "desc": "Male"
+}
+
+### 
+POST http://127.0.0.1:8000/cat
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+    "desc": "Female"
+}
+
+### 
+POST http://127.0.0.1:8000/cat
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+    "desc": "Mixto"
+}
+
+### 
+POST http://127.0.0.1:8000/cat
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+    "desc": "Undefined"
+}
+
+// ---------------------------- MARCAS ---------------------------- //
+//FORMATO marca(id, nombre)
+
+###
+POST http://127.0.0.1:8000/marca
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+    "desc": "Adidas"
+}
+
+###
+POST http://127.0.0.1:8000/marca
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+    "desc": "Nike"
+}
+
+###
+POST http://127.0.0.1:8000/marca
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+    "desc": "Rebook"
+}
+
+###
+POST http://127.0.0.1:8000/marca
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+    "desc": "Puma"
+}
+
+// ---------------------------- SUBCATEGORIAS ---------------------------- //
+//FORMATO subcategoria(id, desc)
+
+###
+POST http://127.0.0.1:8000/scat
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+    "desc": "Torso"
+}
+
+
+###
+POST http://127.0.0.1:8000/scat
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+    "desc": "Pantalones"
+}
+
+###
+POST http://127.0.0.1:8000/scat
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+    "desc": "Calzado"
+}
+
+
+
+// ---------------------------- PRODUCTOS ---------------------------- //
+//FORMATO product(id, desc, price{USD}, stock, marca, cat, sCat)
+
+// ----------- POST - SOLO ADMIN ----------- //
+### 
+
+POST http://127.0.0.1:8000/prod 
+Content-Type: application/json 
+Authorization: Bearer {{ login.response.body.token }}
+{
+    "desc": "Zapatillas Airband Azules",
+    "price": 150,
+    "stock": 2300,
+    "marca": 1, // Adidas
+    "cat": 3, // Undefined
+    "sCat": 3 // Cabeza
+    }
+### 
+POST http://127.0.0.1:8000/prod 
+Content-Type: application/json 
+Authorization: Bearer {{ login.response.body.token }}
+{
+    "desc": "Remera Clasica Tipo A Roja",
+    "price": 50,
+    "stock": 10000,
+    "marca":4, // Puma
+    "cat":1, // Male
+    "sCat": 1 //Torso
+    }
+### 
+POST http://127.0.0.1:8000/prod 
+Content-Type: application/json 
+Authorization: Bearer {{ login.response.body.token }}
+{
+    "desc": "Jean Semi Roto Azul",
+    "price": 100,
+    "stock": 2000,
+    "marca": 3, // Rebook
+    "cat":2, // Female
+    "sCat": 2 // Pantalones
+    }
+### 
+POST http://127.0.0.1:8000/prod 
+Content-Type: application/json 
+Authorization: Bearer {{ login.response.body.token }}
+{
+    "desc": "Zapatos Negros Clasicos",
+    "price": 75,
+    "stock": 3500,
+    "marca": 1, // Adidas
+    "cat": 1, // Male
+    "sCat": 3 // Calzado
+    }
+### 
+POST http://127.0.0.1:8000/prod 
+Content-Type: application/json 
+Authorization: Bearer {{ login.response.body.token }}
+{
+    "desc": "Tacones Altos Rojos Brillantes",
+    "price": 80,
+    "stock": 2950,
+    "marca": 2, // Nike
+    "cat":2, // Female
+    "sCat": 3 // Calzado
+    }
+### 
+POST http://127.0.0.1:8000/prod 
+Content-Type: application/json 
+Authorization: Bearer {{ login.response.body.token }}
+{
+    "desc": "Remera Comun Tipo B Azul",
+    "price": 100,
+    "stock": 2000,
+    "marca": 3, // Rebook
+    "cat":3, // Mixto
+    "sCat": 1 //Torso
+    }
+

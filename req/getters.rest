@@ -3,11 +3,14 @@
 
 ###
 GET http://localhost:8000/prod
+###
+GET http://localhost:8000/prod/2
 
 ###
-GET http://localhost:8000/prod/1
+GET http://localhost:8000/prod?cat=male&sCat=calzado&marca=adidas
 
-
+###
+GET http://localhost:8000/prod?sCat=calzado
 
 //FILTROS SIMPLES
 ###
@@ -30,11 +33,9 @@ GET http://localhost:8000/prod?marca=adidas&cat=male&sCat=calzado
 ### Busqueda filtrada con varias marcas, cats y sCats
 GET http://localhost:8000/prod?multmarca=adidas,nike&multcat=male,female&multScat=calzado,pantalones
 
-###
-GET http://localhost:8000/prod?multmarca=adidas,nike
 
 ### Búsqueda por desc
-GET http://localhost:8000/prod?desc=remera
+GET http://localhost:8000/prod?descripcion=remera comun tipo b azul
 
 
 // ---------------------------- CATEGORIAS ---------------------------- //
@@ -45,7 +46,7 @@ GET http://localhost:8000/cat
 GET http://localhost:8000/cat/2
 
 ### Búsqueda por desc
-GET http://localhost:8000/cat?desc=female
+GET http://localhost:8000/cat?descripcion=female
 
 // ---------------------------- SUBCATEGORIAS ---------------------------- //
 
@@ -66,7 +67,4 @@ GET http://localhost:8000/marca
 GET http://localhost:8000/marca/2
 
 ### Búsqueda por nombre
-GET http://localhost:8000/marca?nom=adidas
-
-
-// ---------------------------- USUARIOS ---------------------------- // --> Los Getters de usuario tienen que ser con Token asi que estan en el otro archivo .rest
+GET http://localhost:8000/marca?nombre=nike

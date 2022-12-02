@@ -1,29 +1,21 @@
 //FORMATO subcategoria(id, desc)
-let entry = [
-	{
-		id: 1,
-		desc: "Torso",
-	},
-	{
-		id: 2,
-		desc: "Pantalones",
-	},
-	{
-		id: 3,
-		desc: "Calzado",
-	},
-];
-
-const getAll = (query) => {
-	//FORMATO subcategoria(id, desc)
-
-	let search = entry;
-	//Filtrar por Descripcion - Search Includes
-	if (query.desc) {
-		search = search.filter((e) => e.desc.toLowerCase().includes(query.desc));
+const { SubCategoria } = require("../models/relaciones.js");
+const getAll = async (filter) => {
+	let options;
+	if (filter.descripcion) {
+		options = {
+			attributes: ["codSCat", "descripcion"],
+			where: {
+				descripcion: filter.descripcion,
+			},
+		};
+	} else {
+		options = {
+			attributes: ["codSCat", "descripcion"],
+		};
 	}
-
-	return search;
+	const datos = await SubCategoria.findAll(options);
+	return datos;
 };
 
-module.exports = { entry, getAll };
+module.exports = { getAll };

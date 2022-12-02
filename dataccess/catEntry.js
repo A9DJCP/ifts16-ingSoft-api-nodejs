@@ -1,33 +1,38 @@
 //FORMATO categoria(id, desc)
-let entry = [
-	{
-		id: 1,
-		desc: "Male",
-	},
-	{
-		id: 2,
-		desc: "Female",
-	},
-	{
-		id: 3,
-		desc: "Mixt",
-	},
-	{
-		id: 4,
-		desc: "Undefined",
-	},
-];
+const { Categoria } = require("../models/relaciones.js");
 
-const getAll = (query) => {
-	//FORMATO categoria(id, desc)
-
-	let search = entry;
-	//Filtrar por Descripcion - Search Includes
-	if (query.desc) {
-		search = search.filter((e) => e.desc.toLowerCase().includes(query.desc));
+const getAll = async (filter) => {
+	let options;
+	if (filter.descripcion) {
+		options = {
+			attributes: ["codCat", "descripcion"],
+			where: {
+				descripcion: filter.descripcion,
+			},
+		};
+	} else {
+		options = {
+			attributes: ["codCat", "descripcion"],
+		};
 	}
-
-	return search;
+	const datos = await Categoria.findAll(options);
+	return datos;
 };
 
-module.exports = { entry, getAll };
+const updateCat = async (id, body) => {
+	const data = await getOne(id);
+	data.descripcion = body.desc;
+	if (body.categoria) {
+		let categoria = {};
+		if (body.categoria.id) {
+			categoria = await Categoria.findByPk(body.categoria.id);
+		} else {
+			categoria = await Categoria.create(body.categoria);
+		}
+		data.categoriaId = categoria.id;
+	}
+	await data.save();
+	return data;
+};
+
+module.exports = { getAll };

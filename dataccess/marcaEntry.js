@@ -1,28 +1,21 @@
 //FORMATO marca(id, nombre)
-let entry = [
-	{
-		id: 1,
-		nombre: "Adidas",
-	},
-	{
-		id: 2,
-		nombre: "Nike",
-	},
-	{
-		id: 3,
-		nombre: "Rebook",
-	},
-];
-
-const getAll = (query) => {
-	//FORMATO marca(id, nombre)
-
-	let search = entry;
-	//Filtrar por Nombre - Search Includes
-	if (query.nom) {
-		search = search.filter((e) => e.nombre.toLowerCase().includes(query.nom));
+const { Marca } = require("../models/relaciones.js");
+const getAll = async (filter) => {
+	let options;
+	if (filter.nombre) {
+		options = {
+			attributes: ["codMarca", "nombre"],
+			where: {
+				nombre: filter.nombre,
+			},
+		};
+	} else {
+		options = {
+			attributes: ["codMarca", "nombre"],
+		};
 	}
-	return search;
+	const datos = await Marca.findAll(options);
+	return datos;
 };
 
-module.exports = { entry, getAll };
+module.exports = { getAll };

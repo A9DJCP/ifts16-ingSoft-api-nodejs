@@ -34,7 +34,7 @@ router.get(
 	middleware.validarAdmin,
 	async (req, res) => {
 		const id = req.params.id;
-		const data = await functions.getOne(id, dao.entry);
+		const data = await functions.getOne(id, Usuario);
 		if (data) {
 			res.status(200).json(data);
 		} else {
@@ -50,7 +50,7 @@ router.get(
 	middleware.validarAdmin,
 	async (req, res) => {
 		const val = req.params.val;
-		const data = await dao.getByFiltro(val, dao.entry);
+		const data = await dao.getByFiltro(val);
 		if (!data) {
 			res.sendStatus(404).json({ error: "error" });
 		} else {

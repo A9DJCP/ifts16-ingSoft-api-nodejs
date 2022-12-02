@@ -1,51 +1,52 @@
 //FORMATO user(id, nickname, name, sname, email, permisos)
-const { Usuario } = require("../models/relaciones.js"); //Busca el objeto Usuario de la clase relaciones.js
-let entry = [
-	{
-		id: 1,
-		nickname: "admin",
-		psw: "12345",
-		name: "Emanuel",
-		sname: "Ramirez",
-		email: "emaR123@hotmail.com",
-		permisos: "admin",
-	},
-	{
-		id: 2,
-		nickname: "lulaluna",
-		psw: "1234",
-		name: "Luna",
-		sname: "Gomez",
-		email: "lluna@gmail.com",
-		permisos: "cliente",
-	},
-	{
-		id: 3,
-		nickname: "mariaMF",
-		psw: "hola1234",
-		name: "Maria",
-		sname: "Fernandez",
-		email: "MF_123@yahoo.com.ar",
-		permisos: "cliente",
-	},
-];
+const { Usuario } = require("../models/relaciones.js");
+const { Permiso } = require("../models/relaciones.js");
 
-const buscarUsuario = (nick) => {
-	const index = entry.findIndex((registro) => registro.nickname == nick);
+const buscarUsuario = async (nickname) => {
+	let options;
+	query = "select codUsuario from usuarios where nickname = " + nickname;
+	options = {
+		attributes: ["codUsuario"],
+		where: {
+			nickname: nickname,
+		},
+	};
+	const index = (await Usuario.findOne(options)).codUsuario;
 	if (index >= 0) {
 		return index;
 	} else {
 		return -1;
 	}
 };
-
-const getByFiltro = (permisosFiltro) => {
-	const permiso = entry.filter(
-		(personas) => personas.permisos == permisosFiltro
-	);
-	if (permiso) {
-		return permiso;
+const getByFiltro = async (permisosFiltro) => {
+	let options;
+	if (permisosFiltro) {
+		options = {
+			attributes: ["codPermiso"],
+			where: {
+				descripcion: permisosFiltro,
+			},
+		};
 	}
+	const PermisoX = await Permiso.findOne(options);
+	const codPermiso = PermisoX.codPermiso;
+
+	if (codPermiso >= 0 && codPermiso <= 2)
+		options = {
+			attributes: [
+				"codUsuario",
+				"nickname",
+				"password",
+				"nombre",
+				"apellido",
+				"email",
+			],
+			where: {
+				permisoCodPermiso: codPermiso,
+			},
+		};
+	const datos = await Usuario.findAll(options);
+	return datos;
 };
 
 const save = async (body) => {
@@ -54,45 +55,93 @@ const save = async (body) => {
 	return Usuario;
 };
 
-const getAll = async (query) => {
-	const datos = await Usuario.findAll(); /* Me trae todos los datos */
+const getAll = async (filter) => {
+	let datos;
+	let options = { include: [{ model: Usuario, required: false }] };
+	//Filtro Completo
+	if (
+		filter.nickname != null &&
+		filter.nombre != null &&
+		filter.email != null &&
+		filter.apellido != null
+	) {
+		options = {
+			where: {
+				nickname: filter.nickname.toLowerCase(),
+				nombre: filter.nombre.toLowerCase(),
+				apellido: filter.apellido.toLowerCase(),
+				email: filter.email.toLowerCase(),
+			},
+		};
+		datos = await Usuario.findAll(options);
+	} else {
+		if (
+			filter.nickname == null &&
+			filter.nombre == null &&
+			filter.apellido == null &&
+			filter.email == null
+		) {
+			datos = await Usuario.findAll();
+		} else {
+			//Filtros Individuales - Pendiente
+			//Filtrar por nickname
+			if (filter.nickname != null) {
+				options = {
+					...options,
+					where: {
+						...options.where,
+						nickname: filter.nickname.toLowerCase(),
+					},
+				};
+			}
+
+			//Filtrar por nombre
+			if (filter.nombre != null) {
+				options = {
+					...options,
+					where: {
+						...options.where,
+						nombre: filter.nombre.toLowerCase(),
+					},
+				};
+			}
+
+			//Filtrar por apellido
+			if (filter.apellido != null) {
+				options = {
+					...options,
+					where: {
+						...options.where,
+						apellido: filter.apellido.toLowerCase(),
+					},
+				};
+			}
+			//Filtrar por email
+			if (filter.email != null) {
+				options = {
+					...options,
+					where: {
+						...options.where,
+						email: filter.email.toLowerCase(),
+					},
+				};
+			}
+			/* PENDIENTE. HAY QUE VER LA RELACION CON LA TABLA PERMISOS
+			//Filtrar por Permisos
+			if (filter.permisoCodPermiso != null) {
+			options = {
+			...options,
+			where: {
+				...options.where,
+				permisoCodPermiso: filter.permisoCodPermiso,
+				},
+			};
+		}
+		*/
+			datos = await Usuario.findAll(options);
+		}
+	}
 	return datos;
-	let search = entry;
-	//Filtrar por nick - Search Includes
-	if (query.nick) {
-		search = search.filter((e) =>
-			e.nickname.toLowerCase().includes(query.nick)
-		);
-	}
-
-	//Filtrar por nombre - Search Includes
-	if (query.nom) {
-		search = search.filter((e) => e.name.toLowerCase().includes(query.nom));
-	}
-
-	//Filtrar por apellido - Search Includes
-	if (query.ape) {
-		search = search.filter((e) => e.sname.toLowerCase().includes(query.ape));
-	}
-
-	//Filtrar por email - Search Includes
-	if (query.email) {
-		search = search.filter((e) => e.email.toLowerCase().includes(query.email));
-	}
-
-	//Filtrar por Permisos - Filtro Igual
-	if (query.permisos) {
-		search = search.filter((e) => e.permisos.toLowerCase() === query.permisos);
-	}
-
-	//Filtrar por varios permisos marcas - Filtro Igual separado con comas
-	if (query.multperm) {
-		search = search.filter((e) =>
-			query.multperm.split(",").includes(e.permisos.toLowerCase())
-		);
-	}
-
-	return search;
 };
 
 const borrar = async (id, entry) => {
@@ -120,11 +169,11 @@ const getOne = async (id) => {
 };
 
 module.exports = {
-	entry,
 	getByFiltro,
 	buscarUsuario,
 	getAll,
 	borrar,
 	save,
 	getOne,
+	update,
 };
